@@ -1,0 +1,27 @@
+.success-body {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 1em;
+  }
+  
+  .success-message {
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .success-icon {
+    width: 24px;
+  }
+  
+  .error-message {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .success-progress {
+    position: absolute;
+    width: 100%;
+  }
