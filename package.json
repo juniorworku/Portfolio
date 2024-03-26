@@ -1,17 +1,18 @@
 {
-  "homepage": "<juniorworku>.github.io/<Portfolio>",
   "name": "portfolio-project",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://juniorworku.github.io/Portfolio",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint. --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+
   "dependencies": {
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",

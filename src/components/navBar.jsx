@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   Navbar,
-  MobileNav,
+  Collapse,
   Typography,
   IconButton,
   Avatar,
@@ -131,7 +131,7 @@ export default function NavBar() {
           )}
         </IconButton>
       </div>
-      <MobileNav open={openNav}>
+      <Collapse open={openNav}>
         <div className="container mx-auto">
           <ui>
             <li>
@@ -177,7 +177,7 @@ export default function NavBar() {
             
           </ui>
         </div>
-      </MobileNav>
+      </Collapse>
       
     </Navbar>
   );
