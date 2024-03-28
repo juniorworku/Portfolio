@@ -23,7 +23,7 @@ const ContactMeSection = () => {
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      const response = await fetch("/api/contact.js", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
