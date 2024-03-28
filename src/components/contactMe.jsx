@@ -4,28 +4,26 @@ import * as Yup from "yup";
 import { Button, Input, Textarea, Typography } from "@material-tailwind/react";
 import checker from "../images/checker.png";
 
+const validationSchema = Yup.object().shape({
+  firstName: Yup.string().required("First Name is Required"),
+  lastName: Yup.string().required("Last Name is Required"),
+  email: Yup.string().email("Invalid email").required("Email is Required"),
+  message: Yup.string().required("Message is Required"),
+});
 
-  const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required("First Name is Required"),
-    lastName: Yup.string().required("Last Name is Required"),
-    email: Yup.string().email("Invalid email").required("Email is Required"),
-    message: Yup.string().required("Message is Required"),
-  });
+const ContactMeSection = () => {
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    message: "",
+  };
 
-  function ContactMeSection() {
-    const initialValues = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      message: "",
-    };
-  
-    const [submissionStatus, setSubmissionStatus] = useState(null);
-  
+  const [submissionStatus, setSubmissionStatus] = useState(null);
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch("/api/contact.js", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,7 +34,6 @@ import checker from "../images/checker.png";
       if (response.ok) {
         setSubmissionStatus("success");
         resetForm();
-        //clear the sucess message after 5 seconds
         setTimeout(() => {
           setSubmissionStatus(null);
         }, 5000);
@@ -62,93 +59,110 @@ import checker from "../images/checker.png";
         potential collaborations
       </Typography>
       <div className="grid grid-cols-1 gap-6">
-        <div className=" w-300 flex flex-col gap-4 m-auto">
+        <div className="w-300 flex flex-col gap-4 m-auto">
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            <form>
-              <Typography
-                variant="h4"
-                className="text-left font-semibold mb-4"
-              >
-                Get in touch
-              </Typography>
-              <div className="grid grid-cols-2 gap-4 text-black">
-                <div>
-                  <Typography
-                    variant="small"
-                    className="mb-2 text-left font-medium"
-                  >
-                    First Name
-                  </Typography>
-                  <Field
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    placeholder="First Name"
-                    as={Input}
-                    className="focus:border-blacked"
-                  />
-                  <ErrorMessage name="firstName" className="text-red-500 font-normal" />
+            {({ handleSubmit }) => (
+              <form onSubmit={handleSubmit}>
+                <Typography
+                  variant="h4"
+                  className="text-left font-semibold mb-4"
+                >
+                  Get in touch
+                </Typography>
+                <div className="grid grid-cols-2 gap-4 text-black">
+                  <div>
+                    <Typography
+                      variant="small"
+                      className="mb-2 text-left font-medium"
+                    >
+                      First Name
+                    </Typography>
+                    <Field
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      placeholder="First Name"
+                      as={Input}
+                      className="focus:border-blacked"
+                    />
+                    <ErrorMessage
+                      name="firstName"
+                      className="text-red-500 font-normal"
+                    />
+                  </div>
+                  <div>
+                    <Typography
+                      variant="small"
+                      className="mb-2 text-left font-medium"
+                    >
+                      Last Name
+                    </Typography>
+                    <Field
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      placeholder="Last Name"
+                      as={Input}
+                      className="focus:border-blacked"
+                    />
+                    <ErrorMessage
+                      name="lastName"
+                      className="text-red-500 font-normal"
+                    />
+                  </div>
                 </div>
                 <div>
                   <Typography
                     variant="small"
                     className="mb-2 text-left font-medium"
                   >
-                    Last Name
+                    Your Email
                   </Typography>
                   <Field
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    placeholder="Last Name"
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="name@example.com"
                     as={Input}
                     className="focus:border-blacked"
                   />
-                  <ErrorMessage name="lastName" className="text-red-500 font-normal" />
+                  <ErrorMessage
+                    name="email"
+                    className="text-red-500 font-normal"
+                  />
                 </div>
-              </div>
-              <div>
-                <Typography
-                  variant="small"
-                  className="mb-2 text-left font-medium"
+                <div>
+                  <Typography
+                    variant="small"
+                    className="mb-2 text-left font-medium"
+                  >
+                    Your Message
+                  </Typography>
+                  <Field
+                    as={Textarea}
+                    rows={6}
+                    id="message"
+                    name="message"
+                    placeholder="Message"
+                    className="focus:border-blacked"
+                  />
+                  <ErrorMessage
+                    name="message"
+                    className="text-red-500 font-normal"
+                  />
+                </div>
+                <Button
+                  className="bg-indigo-300 rounded-full px-4 md:w-[12rem]"
+                  type="submit"
                 >
-                  Your Email
-                </Typography>
-                <Field
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="name@example.com"
-                  as={Input}
-                  className="focus:border-blacked"
-                />
-                <ErrorMessage name="email" className="text-red-500 font-normal" />
-              </div>
-              <div>
-                <Typography
-                  variant="small"
-                  className="mb-2 text-left font-medium"
-                >
-                  Your Message
-                </Typography>
-                <Field
-                  as={Textarea}
-                  rows={6}
-                  id="message"
-                  name="message"
-                  placeholder="Message"
-                  className="focus:border-blacked"
-                />
-                <ErrorMessage name="message" className="text-red-500 font-normal" />
-              </div>
-                <Button className="bg-indigo-300 rounded-full px-4 md:w-[12rem]" type="submit">
                   Send message
                 </Button>
-            </form>
+              </form>
+            )}
           </Formik>
         </div>
         <div>
@@ -170,6 +184,6 @@ import checker from "../images/checker.png";
       </div>
     </div>
   );
-}
+};
 
 export default ContactMeSection;
