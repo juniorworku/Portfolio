@@ -2,17 +2,8 @@ import { useState } from "react";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Button, Input, Textarea, Typography } from "@material-tailwind/react";
-import check from "../images/check-mark.png";
+import checker from "../images/checker.png";
 
-function ContactMeSection() {
-  const initialValues = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    message: "",
-  };
-
-  const [submissionStatus, setSubmissionStatus] = useState(null);
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("First Name is Required"),
@@ -20,6 +11,17 @@ function ContactMeSection() {
     email: Yup.string().email("Invalid email").required("Email is Required"),
     message: Yup.string().required("Message is Required"),
   });
+
+  function ContactMeSection() {
+    const initialValues = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      message: "",
+    };
+  
+    const [submissionStatus, setSubmissionStatus] = useState(null);
+  
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
@@ -34,6 +36,7 @@ function ContactMeSection() {
       if (response.ok) {
         setSubmissionStatus("success");
         resetForm();
+        //clear the sucess message after 5 seconds
         setTimeout(() => {
           setSubmissionStatus(null);
         }, 5000);
@@ -152,7 +155,7 @@ function ContactMeSection() {
           {submissionStatus === "success" && (
             <div className="success-message">
               <div className="success-body">
-                <img src={check} alt="success icon" className="success-icon" />
+                <img src={checker} alt="success icon" className="success-icon" />
                 Email sent successfully! I will get back to you as soon as possible
               </div>
               <div className="success-progress"></div>
